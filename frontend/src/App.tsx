@@ -79,6 +79,14 @@ const epochTimestamp = (seconds?: number): string => {
     .format(new Date(seconds * 1000))
 }
 
+const userFacingError = (error: unknown, fallback: string): string => {
+  const message = error instanceof Error ? error.message : ''
+  if (/koios|transport error|failed to fetch|load failed|epoch_params|address_utxos|address_txs|api\/koios/i.test(message)) {
+    return 'Cardano explorer sync is temporarily unavailable. Your sealed vault and ADA address are still usable.'
+  }
+  return message || fallback
+}
+
 export default function App() {
   const walletRef = useRef<WalletInterface | null>(null)
   const [identity, setIdentity] = useState<CardanoIdentity | null>(null)
@@ -140,7 +148,7 @@ export default function App() {
     } catch (error) {
       setStatus({
         kind: 'error',
-        text: error instanceof Error ? error.message : 'Failed to sync Cardano explorer data.'
+        text: userFacingError(error, 'Failed to sync Cardano explorer data.')
       })
       playSfx('error', sfxEnabled)
     } finally {
@@ -165,7 +173,7 @@ export default function App() {
     } catch (error) {
       setStatus({
         kind: 'error',
-        text: error instanceof Error ? error.message : 'Could not open the Cardano vault.'
+        text: userFacingError(error, 'Could not open the Cardano vault.')
       })
       playSfx('error', sfxEnabled)
     } finally {
@@ -215,7 +223,7 @@ export default function App() {
     } catch (error) {
       setStatus({
         kind: 'error',
-        text: error instanceof Error ? error.message : 'Could not prepare the send.'
+        text: userFacingError(error, 'Could not prepare the send.')
       })
       playSfx('error', sfxEnabled)
     } finally {
@@ -242,7 +250,7 @@ export default function App() {
     } catch (error) {
       setStatus({
         kind: 'error',
-        text: error instanceof Error ? error.message : 'Broadcast failed.'
+        text: userFacingError(error, 'Broadcast failed.')
       })
       playSfx('error', sfxEnabled)
     } finally {

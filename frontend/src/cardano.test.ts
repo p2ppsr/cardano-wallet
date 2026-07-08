@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import {
+  CARDANO_BASKET,
   CARDANO_KEY_ID,
   CARDANO_PROTOCOL_ID,
   createTestLucid,
@@ -9,6 +12,10 @@ import {
   validateCardanoAddress
 } from './cardano'
 import { generatePrivateKey } from '@lucid-evolution/lucid'
+
+const manifest = JSON.parse(
+  readFileSync(fileURLToPath(new URL('../public/manifest.json', import.meta.url)), 'utf8')
+) as any
 
 describe('cardano helpers', () => {
   it('uses a restricted BRC100 security level for Cardano vault keys', () => {
@@ -39,5 +46,20 @@ describe('cardano helpers', () => {
   it('rejects non-mainnet addresses', () => {
     expect(() => validateCardanoAddress('addr_test1vrwgpqx9n8ny456pp3k8h7xwtw504gwupq342g8f5qkplgsmst5v9'))
       .toThrow(/mainnet/i)
+  })
+
+  it('declares BRC-116 grouped permissions for every wallet scope it uses', () => {
+    const metanet = manifest.metanet.groupPermissions
+    expect(manifest.metanet.schemaVersion).toBe(1)
+    expect(metanet.protocolPermissions).toContainEqual({
+      protocolID: CARDANO_PROTOCOL_ID,
+      description: expect.any(String)
+    })
+    expect(metanet.basketAccess).toContainEqual({
+      basket: CARDANO_BASKET,
+      description: expect.any(String)
+    })
+    expect(metanet.spendingAuthorization.amount).toBeGreaterThanOrEqual(10000)
+    expect(manifest.babbage.groupPermissions).toEqual(metanet)
   })
 })

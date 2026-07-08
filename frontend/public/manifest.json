@@ -7,6 +7,56 @@
   "display": "standalone",
   "background_color": "#07101f",
   "theme_color": "#07101f",
+  "metanet": {
+    "schemaVersion": 1,
+    "groupPermissions": {
+      "description": "Permissions needed to seal and load your Cardano vault without repeated prompts.",
+      "spendingAuthorization": {
+        "amount": 100000,
+        "description": "Monthly BSV budget for creating the small PushDrop vault output."
+      },
+      "protocolPermissions": [
+        {
+          "protocolID": [
+            1,
+            "cardano"
+          ],
+          "description": "Encrypt and decrypt the sealed Cardano private-key vault for this app."
+        }
+      ],
+      "basketAccess": [
+        {
+          "basket": "cardano:vault:v1",
+          "description": "Store and load the encrypted Cardano vault PushDrop output."
+        }
+      ]
+    }
+  },
+  "babbage": {
+    "schemaVersion": 1,
+    "groupPermissions": {
+      "description": "Permissions needed to seal and load your Cardano vault without repeated prompts.",
+      "spendingAuthorization": {
+        "amount": 100000,
+        "description": "Monthly BSV budget for creating the small PushDrop vault output."
+      },
+      "protocolPermissions": [
+        {
+          "protocolID": [
+            1,
+            "cardano"
+          ],
+          "description": "Encrypt and decrypt the sealed Cardano private-key vault for this app."
+        }
+      ],
+      "basketAccess": [
+        {
+          "basket": "cardano:vault:v1",
+          "description": "Store and load the encrypted Cardano vault PushDrop output."
+        }
+      ]
+    }
+  },
   "icons": [
     {
       "src": "/assets/cardano-wallet-hero.png",

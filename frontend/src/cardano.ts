@@ -14,7 +14,7 @@ export const CARDANO_KEY_ID = '1'
 export const CARDANO_BASKET = 'cardano:vault:v1'
 export const CARDANO_VAULT_MAGIC = 'cardano-wallet-vault-v1'
 export const CARDANO_NETWORK = 'Mainnet'
-export const KOIOS_API_BASE = 'https://api.koios.rest/api/v1'
+export const KOIOS_API_BASE = import.meta.env.VITE_KOIOS_API_BASE?.trim() || '/api/koios'
 export const LOVELACE_PER_ADA = 1000000n
 export const MIN_ADA_SEND = 1000000n
 
@@ -103,7 +103,7 @@ export const createTestLucid = async (privateKey: string): Promise<LucidEvolutio
 
 export const identityFromPrivateKey = async (
   privateKey: string,
-  lucidFactory: (privateKey: string) => Promise<LucidEvolution> = createCardanoLucid,
+  lucidFactory: (privateKey: string) => Promise<LucidEvolution> = createTestLucid,
   loadedFromVault = true
 ): Promise<CardanoIdentity> => {
   const lucid = await lucidFactory(privateKey)

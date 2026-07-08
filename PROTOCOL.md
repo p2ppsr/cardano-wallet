@@ -10,6 +10,16 @@
 
 The first protocol element is the BRC100 security level. Cardano Wallet uses level `1` so another app cannot request the same encryption key through the wide-open level `0` namespace.
 
+## BRC-116 Permission Manifest
+
+The web app manifest declares the wallet scopes used by this protocol under `metanet.groupPermissions` and mirrors them under `babbage.groupPermissions` for legacy wallet compatibility:
+
+- protocol permission for `[1, "cardano"]`
+- basket access for `cardano:vault:v1`
+- bounded monthly BSV spending authorization for the small PushDrop vault output
+
+The protocol permission intentionally omits `counterparty` because BRC-116 scopes Level 1 protocol permissions by `protocolID`; runtime calls still use `counterparty: "self"` for BRC100 encryption and PushDrop locking.
+
 ## Vault Creation
 
 1. Generate a Cardano/Lucid private key in the browser.
