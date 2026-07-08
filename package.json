@@ -2,7 +2,7 @@
   "name": "@p2ppsr/cardano-wallet",
   "private": true,
   "version": "1.0.0",
-  "description": "Frontend-only BRC100 Cardano wallet for the Metanet.",
+  "description": "Static BRC100 Cardano wallet for the Metanet.",
   "license": "SEE LICENSE IN LICENSE.txt",
   "scripts": {
     "lars": "lars",

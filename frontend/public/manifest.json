@@ -1,7 +1,7 @@
 {
   "name": "Cardano Wallet",
   "short_name": "Cardano Wallet",
-  "description": "A frontend-only Cardano wallet powered by a BRC100-sealed PushDrop vault.",
+  "description": "A static Cardano wallet powered by a BRC100-sealed PushDrop vault.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
